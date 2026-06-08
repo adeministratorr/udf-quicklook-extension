@@ -1,0 +1,16 @@
+.DS_Store
+build/
+.build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+.claude/
+
+# All markdown is local-only except the user-facing README
+*.md
+!/README.md
+
+# Test code and test/sample documents are not published (privacy: real legal docs)
+/Tests/
+/samples/
+UDFKit/Tests/
