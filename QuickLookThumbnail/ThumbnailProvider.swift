@@ -1,5 +1,6 @@
 // QuickLookThumbnail/ThumbnailProvider.swift
 import AppKit
+import PDFKit
 import QuickLookThumbnailing
 import UDFRender
 
@@ -9,29 +10,33 @@ final class ThumbnailProvider: QLThumbnailProvider {
         for request: QLFileThumbnailRequest,
         _ handler: @escaping (QLThumbnailReply?, Error?) -> Void
     ) {
-        let attr: NSAttributedString
+        let pdfData: Data
         do {
-            attr = try UDFRenderer.attributedString(from: request.fileURL)
+            pdfData = try UDFPDFRenderer.pdfData(from: request.fileURL)
         } catch {
             handler(nil, error)
             return
         }
+        guard let doc = PDFDocument(data: pdfData), let page = doc.page(at: 0) else {
+            handler(nil, NSError(domain: "UDFThumbnail", code: 1,
+                                 userInfo: [NSLocalizedDescriptionKey: "PDF sayfası yok"]))
+            return
+        }
 
-        let size = request.maximumSize
-        let inset = size.width * 0.06
-        let textRect = NSRect(x: inset, y: inset,
-                              width: size.width - 2 * inset,
-                              height: size.height - 2 * inset)
+        let maxSize = request.maximumSize
+        let pageRect = page.bounds(for: .mediaBox)
+        // A4 oranını koruyarak istenen kutuya sığdır.
+        let scale = min(maxSize.width / pageRect.width, maxSize.height / pageRect.height)
+        let size = NSSize(width: pageRect.width * scale, height: pageRect.height * scale)
 
-        // The QuickLook thumbnail context is a standard non-flipped (y-up,
-        // bottom-left origin) context. `draw(with:.usesLineFragmentOrigin)` renders
-        // the text upright, top-down, within the rect — no manual flip needed.
-        // (An earlier manual CGContext flip rendered the thumbnail upside-down.)
         let reply = QLThumbnailReply(contextSize: size) { () -> Bool in
+            guard let ctx = NSGraphicsContext.current?.cgContext else { return false }
             NSColor.white.setFill()
             NSRect(origin: .zero, size: size).fill()
-            attr.draw(with: textRect,
-                      options: [.usesLineFragmentOrigin, .truncatesLastVisibleLine])
+            ctx.saveGState()
+            ctx.scaleBy(x: scale, y: scale)
+            page.draw(with: .mediaBox, to: ctx)   // PDF sayfası y-up context'e dik çizilir
+            ctx.restoreGState()
             return true
         }
         handler(reply, nil)
