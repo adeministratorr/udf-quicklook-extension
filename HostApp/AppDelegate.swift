@@ -29,19 +29,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     private func openDocument(_ url: URL) {
-        do {
-            let attr = try UDFRenderer.attributedString(from: url)
-            let controller = ViewerWindowController(url: url, content: attr)
-            controller.showWindow(nil)
-            controller.window?.makeKeyAndOrderFront(nil)
-            controllers.append(controller)
-            controller.window?.delegate = self
-        } catch {
-            let alert = NSAlert()
-            alert.messageText = "Belge açılamadı"
-            alert.informativeText = "\(url.lastPathComponent): \(error.localizedDescription)"
-            alert.runModal()
-        }
+        let controller = ViewerWindowController(url: url)
+        controller.showWindow(nil)
+        controller.window?.makeKeyAndOrderFront(nil)
+        controllers.append(controller)
+        controller.window?.delegate = self
     }
 
     func windowWillClose(_ notification: Notification) {

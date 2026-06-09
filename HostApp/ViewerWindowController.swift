@@ -1,11 +1,13 @@
 // HostApp/ViewerWindowController.swift
 import AppKit
+import PDFKit
+import UDFRender
 
 final class ViewerWindowController: NSWindowController, NSToolbarDelegate {
     let sourceURL: URL
     private static let openInEditorItemID = NSToolbarItem.Identifier("OpenInEditor")
 
-    init(url: URL, content: NSAttributedString) {
+    init(url: URL) {
         self.sourceURL = url
         let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 800, height: 1000),
@@ -14,20 +16,17 @@ final class ViewerWindowController: NSWindowController, NSToolbarDelegate {
         window.title = url.lastPathComponent
         window.center()
 
-        let scroll = NSScrollView(frame: window.contentLayoutRect)
-        scroll.hasVerticalScroller = true
-        scroll.autoresizingMask = [.width, .height]
-
-        let tv = NSTextView(frame: scroll.bounds)
-        tv.isEditable = false
-        tv.isSelectable = true
-        tv.autoresizingMask = [.width]
-        tv.textContainerInset = NSSize(width: 24, height: 24)
-        tv.textStorage?.setAttributedString(content)
-        tv.drawsBackground = true
-        tv.backgroundColor = .white
-        scroll.documentView = tv
-        window.contentView = scroll
+        let pdfView = PDFView(frame: window.contentLayoutRect)
+        pdfView.autoScales = true
+        pdfView.displayMode = .singlePageContinuous
+        pdfView.displayDirection = .vertical
+        pdfView.pageShadowsEnabled = true
+        pdfView.backgroundColor = NSColor(white: 0.85, alpha: 1.0)
+        pdfView.autoresizingMask = [.width, .height]
+        if let data = try? UDFPDFRenderer.pdfData(from: url) {
+            pdfView.document = PDFDocument(data: data)
+        }
+        window.contentView = pdfView
         window.appearance = NSAppearance(named: .aqua)
 
         super.init(window: window)
