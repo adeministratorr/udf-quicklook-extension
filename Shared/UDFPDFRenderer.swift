@@ -78,8 +78,9 @@ public enum UDFPDFRenderer {
                 ctx.endPDFPage()
 
                 let newGlyph = NSMaxRange(range)
-                // İlerleme yoksa (degenerate margin: hiçbir glyph sığmadı) sonsuz döngüyü önle.
-                if newGlyph <= glyph && glyph != 0 { break }
+                // İlerleme yoksa (boş segment ya da hiçbir glyph sığmayan dejenere margin)
+                // bir sayfa basıp dur — sonsuz döngüyü önle.
+                if newGlyph <= glyph { break }
                 glyph = newGlyph
             } while glyph < lm.numberOfGlyphs
         }

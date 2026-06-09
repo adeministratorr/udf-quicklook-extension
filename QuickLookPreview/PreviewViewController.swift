@@ -8,7 +8,6 @@ import UDFRender
 final class PreviewViewController: NSViewController, QLPreviewingController {
     private var pdfView: PDFView!
     private var thumbnailView: PDFThumbnailView!
-    private var splitView: NSSplitView!
 
     override func loadView() {
         let pdf = PDFView(frame: NSRect(x: 0, y: 0, width: 800, height: 1000))
@@ -34,7 +33,6 @@ final class PreviewViewController: NSViewController, QLPreviewingController {
 
         self.pdfView = pdf
         self.thumbnailView = thumbs
-        self.splitView = split
         self.view = split
     }
 

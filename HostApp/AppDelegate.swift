@@ -1,7 +1,6 @@
 // HostApp/AppDelegate.swift
 import AppKit
 import UniformTypeIdentifiers
-import UDFRender
 
 final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var controllers: [ViewerWindowController] = []
