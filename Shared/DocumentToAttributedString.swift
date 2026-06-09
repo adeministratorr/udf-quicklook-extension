@@ -77,13 +77,11 @@ struct DocumentToAttributedString {
                 if result.length > 0 && !result.string.hasSuffix("\n") {
                     result.append(NSAttributedString(string: "\n", attributes: defaultAttributes()))
                 }
+                // Görünmez sayfa-sonu işaretçisi: PDF üreteci .udfPageBreak taşıyan
+                // aralıkta gövdeyi bölüp sonraki segmenti yeni sayfada başlatır.
                 var attrs = defaultAttributes()
-                let ps = NSMutableParagraphStyle()
-                ps.alignment = .center
-                attrs[.paragraphStyle] = ps
                 attrs[.udfPageBreak] = true
-                // A visible, single-paragraph marker. Full visual cleanup is Phase 3.
-                result.append(NSAttributedString(string: "──────── Sayfa Sonu ────────\n", attributes: attrs))
+                result.append(NSAttributedString(string: "\n", attributes: attrs))
             }
         }
     }
