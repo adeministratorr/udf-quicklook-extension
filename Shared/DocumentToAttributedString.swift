@@ -360,35 +360,33 @@ struct DocumentToAttributedString {
     // MARK: - Borders
 
     private static func configureBorders(_ block: NSTextTableBlock, cell: TableCell) {
-        // Border visibility is driven by borderStyle + borderSpec, NOT colour
-        // alpha. The official editor (and the TS reference's argbToCss) ignore
-        // the alpha channel for borders, so borderColor=0 is opaque black — not
-        // transparent. Force full opacity so genuine `borderColor="0"` tables,
-        // which are the common case, render visible.
+        // Görünürlük kuralı UDFKit'te saf fonksiyonda (borderNone / width>0 /
+        // near-white değil / spec biti). borderColor alpha'sı yok sayılır:
+        // borderColor=0 → opak siyah (resmi editör davranışı).
+        let edges = visibleBorderEdges(
+            borderName: cell.border.name,
+            borderWidth: cell.borderWidth,
+            borderSpec: cell.borderSpec,
+            borderColor: cell.borderColor
+        )
         let comps = argbToComponents(cell.borderColor)
         let borderColor = NSColor(srgbRed: CGFloat(comps.r), green: CGFloat(comps.g),
                                   blue: CGFloat(comps.b), alpha: 1.0)
         let borderWidth = CGFloat(cell.borderWidth)
-        let effectiveSpec = cell.borderSpec
 
-        // Set all four edges — active edges get full border, inactive get width=0
-        for edge: NSRectEdge in [.minY, .maxX, .maxY, .minX] {
-            let bit: Int
-            switch edge {
-            case .minY: bit = 1  // top
-            case .maxX: bit = 2  // right
-            case .maxY: bit = 4  // bottom
-            case .minX: bit = 8  // left
-            default: bit = 0
-            }
-
-            if effectiveSpec & bit != 0 {
+        func apply(_ visible: Bool, _ edge: NSRectEdge) {
+            if visible {
                 block.setBorderColor(borderColor, for: edge)
                 block.setWidth(borderWidth, type: .absoluteValueType, for: .border, edge: edge)
             } else {
+                // Görünmez kenar: renk de atama, genişliği sıfırla (hairline'ı önler).
                 block.setWidth(0, type: .absoluteValueType, for: .border, edge: edge)
             }
         }
+        apply(edges.top, .minY)     // top=1
+        apply(edges.right, .maxX)   // right=2
+        apply(edges.bottom, .maxY)  // bottom=4
+        apply(edges.left, .minX)    // left=8
     }
 
     // MARK: - Helpers
