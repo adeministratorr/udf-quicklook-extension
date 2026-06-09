@@ -31,4 +31,32 @@ public enum UDFRenderer {
         }
         return out
     }
+
+    /// Tek bir UDF'in render edilmiş parçaları: gövde + header + footer + sayfa formatı.
+    public struct Parts {
+        public let body: NSAttributedString
+        public let header: NSAttributedString
+        public let footer: NSAttributedString
+        public let pageFormat: PageFormat
+    }
+
+    /// PDF üreteci için: gövde/header/footer'ı ayrı ayrı, sayfa formatıyla döndürür.
+    public static func parts(from url: URL) throws -> Parts {
+        let data: Data
+        do { data = try Data(contentsOf: url) }
+        catch { throw UDFRenderError.unreadable(url) }
+
+        let doc: UDFDocument
+        do { doc = try UDFParser().parse(from: data) }
+        catch { throw UDFRenderError.parseFailed(error) }
+
+        let body = DocumentToAttributedString.convert(doc)
+        let header = doc.header.isEmpty
+            ? NSAttributedString()
+            : DocumentToAttributedString.convertBlocks(doc.header)
+        let footer = doc.footer.isEmpty
+            ? NSAttributedString()
+            : DocumentToAttributedString.convertBlocks(doc.footer)
+        return Parts(body: body, header: header, footer: footer, pageFormat: doc.pages)
+    }
 }
