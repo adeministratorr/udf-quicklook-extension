@@ -12,17 +12,21 @@
   <key>LSMinimumSystemVersion</key><string>14.0</string>
   <key>NSHighResolutionCapable</key><true/>
   <key>NSPrincipalClass</key><string>NSApplication</string>
-  <key>CFBundleDocumentTypes</key>
-  <array>
-    <dict>
-      <key>CFBundleTypeName</key><string>UDF Document</string>
-      <key>CFBundleTypeRole</key><string>Viewer</string>
-      <key>LSHandlerRank</key><string>Alternate</string>
-      <key>LSItemContentTypes</key><array><string>com.uyap.udf</string><string>tr.gov.uyap.editor.udf</string></array>
-      <key>CFBundleTypeExtensions</key><array><string>udf</string></array>
-    </dict>
-  </array>
-  <key>UTExportedTypeDeclarations</key>
+  <!--
+    BİLİNÇLİ OLARAK CFBundleDocumentTypes YOK.
+    Bu yalnızca QuickLook (önizleme + thumbnail) sağlayan bir araçtır; kendisini
+    .udf için bir "belge açıcı" olarak KAYDETMEZ. Aksi halde LaunchServices bu
+    salt-okunur görüntüleyiciyi .udf'in açıcı listesine ekler ve resmî UYAP
+    editörü (UDE) silindiğinde/çakıştığında çift tıklama editör yerine buraya
+    yönlenir. Çift tıklama her zaman kullanıcının kendi editörüne gitmeli.
+  -->
+  <!--
+    UTI'yi İTHAL (imported) ediyoruz, İHRAÇ (exported) DEĞİL. İthal: ".udf
+    uzantısının bir UTI'si olduğunu sisteme bildiririm ama sahibi ben değilim."
+    Bu sayede resmî editörün kendi türüyle (tr.gov.uyap.editor.udf) çakışmayız;
+    yalnızca QuickLook eklentilerinin türü tanıyabilmesini sağlarız.
+  -->
+  <key>UTImportedTypeDeclarations</key>
   <array>
     <dict>
       <key>UTTypeConformsTo</key><array><string>public.data</string></array>

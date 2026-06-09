@@ -10,6 +10,7 @@ REPO_URL="https://github.com/saidsurucu/udf-quicklook-extension.git"
 CLONE_DIR="$HOME/udf-quicklook-extension"
 APP="UDFViewer.app"
 DEST="/Applications/$APP"
+LSREGISTER=/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister
 
 if [ -t 1 ]; then
   BOLD=$'\033[1m'; GRN=$'\033[32m'; YLW=$'\033[33m'; RED=$'\033[31m'; BLU=$'\033[34m'; RST=$'\033[0m'
@@ -71,14 +72,20 @@ ok "Derlendi: $BUILT"
 # --- Applications'a kurulum ---
 step "Applications'a kurulum"
 osascript -e 'tell application "UDFViewer" to quit' >/dev/null 2>&1 || true
-if [ -e "$DEST" ]; then rm -rf "$DEST" 2>/dev/null || sudo rm -rf "$DEST"; fi
+# Eski sürüm kendini .udf açıcısı olarak kaydetmiş olabilir; yeni paketi
+# kurmadan ÖNCE eski kurulu kopyayı LaunchServices'ten düşür ki bayat
+# "varsayılan uygulama" bağlaması temizlensin ve çift tıklama tekrar resmî
+# editöre dönsün. (Yeni sürüm artık hiç belge açıcı olarak kaydolmuyor.)
+if [ -e "$DEST" ]; then
+  "$LSREGISTER" -u "$DEST" 2>/dev/null || true
+  rm -rf "$DEST" 2>/dev/null || sudo rm -rf "$DEST"
+fi
 # ditto preserves code signatures + bundle symlinks (cp -R can corrupt them)
 if ditto "$BUILT" "$DEST" 2>/dev/null; then ok "Kuruldu: $DEST"
 else warn "/Applications yazılamadı; yönetici izniyle…"; sudo ditto "$BUILT" "$DEST"; ok "Kuruldu: $DEST"; fi
 
 # --- Derleme kopyasını temizle (yoksa LaunchServices build/ içindeki kopyayı
 #     /Applications yerine kaydedebilir ve eski sürüm gösterilir) ---
-LSREGISTER=/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister
 "$LSREGISTER" -u "$BUILT" 2>/dev/null || true
 rm -rf "$SCRIPT_DIR/build" 2>/dev/null || true
 
@@ -99,6 +106,8 @@ qlmanage -r cache >/dev/null 2>&1 || true
 ok "Eklentiler kaydedildi"
 
 printf '\n'
-ok "${BOLD}BİTTİ.${RST} Artık bir .udf dosyasına Finder'da ${BOLD}boşluk (space)${RST} tuşuyla önizleme açabilir,"
-say "çift tıklayarak görüntüleyebilir, görüntüleyicideki ${BOLD}\"UYAP Editöründe Aç\"${RST} düğmesiyle editöre geçebilirsiniz."
+ok "${BOLD}BİTTİ.${RST} Artık bir .udf dosyasına Finder'da ${BOLD}boşluk (space)${RST} tuşuyla önizleme açabilir"
+say "ve küçük resimlerini (thumbnail) görebilirsiniz. ${BOLD}Çift tıklama${RST} eskisi gibi resmî UYAP"
+say "editörünü (UDE) açmaya devam eder — bu araç dosya ilişkisini değiştirmez."
+say "Önizleme penceresindeki ${BOLD}\"UYAP Editöründe Aç\"${RST} düğmesiyle de editöre geçebilirsiniz."
 warn "Önizleme görünmezse: Sistem Ayarları → Genel → Giriş Öğeleri ve Uzantılar → Hızlı Bakış → \"UDFViewer\" işaretli olmalı."

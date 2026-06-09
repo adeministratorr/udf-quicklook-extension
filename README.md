@@ -3,8 +3,9 @@
 UYAP `.udf` dosyaları için macOS uygulaması:
 - Finder'da bir `.udf` dosyasına **boşluk (space)** tuşuna basınca **önizleme**.
 - Finder'da dosya simgesinde **küçük resim (thumbnail)**.
-- Çift tıklayınca **salt-okunur görüntüleyici** (metin seçilip kopyalanabilir).
-- Görüntüleyicide **"UYAP Editöründe Aç"** düğmesi (Uyap Doküman Editörü kuruluysa).
+- **Salt-okunur görüntüleyici** (metin seçilip kopyalanabilir) ve içinde **"UYAP Editöründe Aç"** düğmesi (Uyap Doküman Editörü kuruluysa).
+
+> Not: Bu araç `.udf` dosyalarının **çift tıklama (varsayılan uygulama)** ilişkisini **değiştirmez**. Çift tıklama eskisi gibi resmî UYAP editörünü açmaya devam eder; bu uygulama yalnızca QuickLook önizleme + thumbnail ekler. Salt-okunur görüntüleyiciyi kullanmak için **UDF Görüntüleyici** uygulamasını açıp **Dosya → Aç… (⌘O)** ile `.udf` dosyasını seçin (veya dosyayı uygulama ikonuna sürükleyin).
 
 ## Ekran görüntüleri
 
