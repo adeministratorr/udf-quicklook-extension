@@ -242,6 +242,15 @@ public struct UDFParser {
                         break
                     }
                     runs.append(.text(run))
+                case "field", "space":
+                    // UYAP stores variable data (mahkeme adı, esas no, taraf
+                    // bilgileri) as <field> runs, with the whitespace between
+                    // them as <space>. Both index into the same CDATA block as
+                    // <content> and carry the same font attributes, so they are
+                    // plain text as far as rendering is concerned. The field
+                    // metadata (fieldName/fieldType) is not modelled — on write
+                    // they collapse into <content>.
+                    runs.append(.text(parseTextRun(childEl, cdataText: cdataText)))
                 case "image":
                     runs.append(.image(parseImageRun(childEl)))
                 case "tab":
