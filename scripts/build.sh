@@ -22,6 +22,13 @@ mkdir -p "$PREV/Contents/MacOS" "$THUMB/Contents/MacOS"
 cp "$BIN/UDFViewer" "$APP/Contents/MacOS/UDFViewer"
 cp "$ROOT/HostApp/Info.plist" "$APP/Contents/Info.plist"
 
+# Ikon: depoda hazir yoksa uret, Resources'a gom (UYAP-editor ailesi stili)
+mkdir -p "$APP/Contents/Resources"
+if [ ! -f "$ROOT/assets/UDFViewer.icns" ]; then
+  swift "$ROOT/scripts/make-icon.swift"
+fi
+cp "$ROOT/assets/UDFViewer.icns" "$APP/Contents/Resources/UDFViewer.icns"
+
 # Preview extension
 cp "$BIN/QuickLookPreview" "$PREV/Contents/MacOS/QuickLookPreview"
 cp "$ROOT/QuickLookPreview/Info.plist" "$PREV/Contents/Info.plist"

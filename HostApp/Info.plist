@@ -6,6 +6,7 @@
   <key>CFBundleIdentifier</key><string>com.uyapudf.viewer</string>
   <key>CFBundleName</key><string>UDFViewer</string>
   <key>CFBundleDisplayName</key><string>UDF Görüntüleyici</string>
+  <key>CFBundleIconFile</key><string>UDFViewer.icns</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleShortVersionString</key><string>1.0</string>
   <key>CFBundleVersion</key><string>1</string>
