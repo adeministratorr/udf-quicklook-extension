@@ -1,20 +1,33 @@
-# UDF Görüntüleyici + Hızlı Bakış (QuickLook) — macOS Apple Silicon (M1/M2/M3/M4) Kurulumu
+# UDF görüntüleyici (QuickLook) — macOS Apple Silicon
 
-UYAP'ın `.udf` belge dosyalarını **MacBook, MacBook Pro, MacBook Air, Mac mini ve iMac**'de görüntüleyin: Finder'da **boşluk tuşuyla önizleme**, simgede **küçük resim** ve çift tıklamayla açılan **salt-okunur görüntüleyici**. Apple Silicon (M serisi, ARM tabanlı işlemci) için native Swift — Rosetta yok, Java kurulumu gerekmez.
+> **Kısa yanıt:** UYAP'tan indirdiğiniz `.udf` dosyalarını açmadan, Finder'da **boşluk tuşuyla** önizlemek ve dosya simgesinde **küçük resim** görmek istiyorsanız bu araç tam bunu yapar: **MacBook, MacBook Pro, MacBook Air, Mac mini ve iMac**'de (Apple Silicon / M serisi / ARM tabanlı işlemci) native Swift ile çalışır; Rosetta veya Java gerekmez. **Salt-okunur görüntüleyicidir** — `.udf` düzenleme, imzalama veya e-imza doğrulama yapmaz; bunun için UYAP Doküman Editörü gerekir. Gayriresmî topluluk çalışmasıdır.
 
-**Kimler için:** UYAP'tan `.udf` (dilekçe, tebligat, karar, bilirkişi raporu) indiren avukatlar, bilirkişiler ve arabulucular; arşiv tarayan hukuk büroları; UYAP evrakı işleyen idari birimler ve kamu çalışanları.
+## Hangi araç?
+
+| İhtiyaç | Araç |
+|---|---|
+| Yalnızca görüntüleme / hızlı önizleme | **Bu proje** (QuickLook + salt-okunur görüntüleyici) |
+| Düzenleme / imzalama | [UYAP Doküman Editörü (arm64)](https://github.com/adeministratorr/ude-mac-arm64-1) + arm64 AKİS sürücüsü |
+| Resmî editör | [uyap.gov.tr/Uyap-Editor](https://www.uyap.gov.tr/Uyap-Editor) (5.4.21+ Apple Silicon paketi) |
+
+## İlk kez kuranlar için
+
+1. **Kurulum:** [Releases](../../releases) → `UdfQuicklook-arm64-*.dmg` (en hızlı) veya `brew install --cask adeministratorr/tap/udf-quicklook`.
+2. **Etkinleştirme:** Sistem Ayarları → Genel → Giriş Öğeleri ve Uzantılar → **Hızlı Bakış** → **UDFViewer** işaretli olmalı.
+3. **Başarılı kurulum nasıl anlaşılır?** Finder'da bir `.udf` dosyası seçip **Boşluk** tuşuna basın: önizleme açılır; dosya simgesinde küçük resim görünür.
+4. **Sık hata:** Önizleme çıkmıyorsa uzantı işaretli değildir (2. adım) veya QuickLook servisi yeniden başlatılmalıdır: `qlmanage -r`.
+5. **Önemli sınır:** Çift tıklama davranışını **değiştirmez** — çift tıklama yine resmî/ kurulu UYAP editörünü açar. İçerik salt-okunur görüntülenir; belgedeki e-imza bu araçta **doğrulanmaz**. Intel Mac desteklenmez.
+
+> **Güvenlik notu:** Bu paket resmî kurum uygulaması değildir. DMG sürümü Developer ID ile imzalı ve Apple notarizasyonundan geçmiştir; sürüm notlarında `sha256` bulunur. Kaynaktan derleme (`kur.sh` / `swift build`) ad-hoc imzalar; betiği çalıştırmadan önce inceleyin.
 
 ## Kimler için?
 
-- **Avukatlar:** UYAP'tan indirdiği `.udf` (dilekçe, tebligat, karar) dosyalarını Finder'da hızlıca gözden geçirmek isteyenler.
-- **Bilirkişiler ve arabulucular:** Rapor eklerini, tebliğ belgelerini hızlı önizlemek isteyenler.
-- **Hukuk büroları:** Arşivdeki `.udf` dosyalarını UYAP Editör'ü açmadan taramak isteyenler.
-- **İdari birimler ve kamu çalışanları:** UYAP evrakını görüntüleyip değerlendirenler.
+UYAP'tan `.udf` (dilekçe, tebligat, karar, bilirkişi raporu) indiren **avukatlar, bilirkişiler ve arabulucular**; arşiv tarayan **hukuk büroları**; UYAP evrakı işleyen **idari birimler ve kamu çalışanları**; `.udf` dosyalarını UYAP Editör'ü açmadan hızlıca gözden geçirmek isteyen tüm Mac kullanıcıları.
 
 ## "UDF dosyası açılmıyor" arayanlar için kısa cevaplar
 
 - **Çift tıklama davranışı değişir mi?** Hayır — çift tıklama eskisi gibi resmî UYAP Editörü'nü açar. Bu araç yalnızca **hızlı bakış önizlemesi + küçük resim** ekler.
-- **MacBook / MacBook Pro / MacBook Air / iMac / Mac mini'de çalışır mı?** Evet — Apple Silicon (M1/M2/M3/M4) tüm modeller. Intel Mac desteklenmez.
+- **MacBook / MacBook Pro / MacBook Air / iMac / Mac mini'de çalışır mı?** Evet — Apple Silicon (M1/M2/M3/M4 ve sonrası) modeller. Intel Mac desteklenmez.
 - **Salt-okunur görüntüleyici nasıl açılır?** Uygulamayı açıp **Dosya → Aç… (⌘O)** ile `.udf` seçin veya dosyayı uygulama ikonuna sürükleyin.
 - **Pencere boş mu açılıyor?** Güncel sürümde boş başlatmada "dosyayı sürükleyin / Aç…" diyen bir karşılama penceresi vardır (bu fork'te eklendi).
 - **Önizleme görünmüyor mu?** Sistem Ayarları → Genel → Giriş Öğeleri ve Uzantılar → **Hızlı Bakış** → **UDFViewer** işaretli olmalı.
@@ -24,19 +37,15 @@ UYAP'ın `.udf` belge dosyalarını **MacBook, MacBook Pro, MacBook Air, Mac min
 
 ## Kurulum (3 yol)
 
-1. **Tek satır (kaynaktan derler):**
-
-```
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/adeministratorr/udf-quicklook-extension/main/kur.sh)"
-```
-
-2. **Homebrew cask (hazır DMG, en hızlı):**
-
+1. **Hazır DMG (en hızlı):** [Releases](../../releases) → `UdfQuicklook-arm64-*.dmg`.
+2. **Homebrew cask:**
 ```bash
 brew install --cask adeministratorr/tap/udf-quicklook
 ```
-
-3. **Hazır DMG:** [Releases](../../releases) → `UdfQuicklook-arm64-*.dmg`
+3. **Tek satır (kaynaktan derler; betiği önce inceleyin):**
+```
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/adeministratorr/udf-quicklook-extension/main/kur.sh)"
+```
 
 > Bu fork'teki sürüm, orijinal projeye ek olarak **UYAP Editör ailesi stiliyle çizilmiş uygulama ikonu** ve **karşılama penceresi** (sürükle-bırak + ⌘O) içerir; çift tıklamayla açıldığında sessizce boş açılmaz.
 
