@@ -1,3 +1,5 @@
+![UDF Quick Look — macOS Finder için UYAP .udf önizleme](assets/social-preview.jpg)
+
 # UDF görüntüleyici (QuickLook) — macOS Apple Silicon
 
 > **Kısa yanıt:** UYAP'tan indirdiğiniz `.udf` dosyalarını açmadan, Finder'da **boşluk tuşuyla** önizlemek ve dosya simgesinde **küçük resim** görmek istiyorsanız bu araç tam bunu yapar: **MacBook, MacBook Pro, MacBook Air, Mac mini ve iMac**'de (Apple Silicon / M serisi / ARM tabanlı işlemci) native Swift ile çalışır; Rosetta veya Java gerekmez. **Salt-okunur görüntüleyicidir** — `.udf` düzenleme, imzalama veya e-imza doğrulama yapmaz; bunun için UYAP Doküman Editörü gerekir. Gayriresmî topluluk çalışmasıdır.
