@@ -20,6 +20,7 @@ UYAP'ın `.udf` belge dosyalarını **MacBook, MacBook Pro, MacBook Air, Mac min
 - **Önizleme görünmüyor mu?** Sistem Ayarları → Genel → Giriş Öğeleri ve Uzantılar → **Hızlı Bakış** → **UDFViewer** işaretli olmalı.
 - **UDF belgeleri e-imzalı; görüntülemek için e-imza gerekir mi?** Hayır — görüntüleme ve önizleme e-imza/kart gerektirmez. Belgeyi düzenleyip imzalamak için [UYAP Doküman Editörü (arm64)](https://github.com/adeministratorr/ude-mac-arm64-1) ve arm64 AKİS sürücüsü gerekir.
 - **UYAP Editör gerekir mi?** Önizleme için hayır. "UYAP Editöründe Aç" düğmesi, Uyap Doküman Editörü kuruluysa çalışır.
+- **macOS 28 / Rosetta uyarısı mı alıyorsunuz?** Uyarı bu araçtan değil, eski **Intel** AKİS paketinden (`/Applications/Akia.app`) gelir. TÜBİTAK'ın **Arm (Apple Silicon)** paketini kurup eski Intel `Akia.app`'i kaldırın; imzalama için kritik olan `libakisp11.dylib`'in `arm64` içermesidir (ayrıntı: [UYAP Doküman Editörü (arm64)](https://github.com/adeministratorr/ude-mac-arm64-1) README).
 
 ## Kurulum (3 yol)
 
