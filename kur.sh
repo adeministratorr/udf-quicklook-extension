@@ -2,11 +2,11 @@
 # kur.sh — UDF QuickLook + Görüntüleyici uygulamasını kaynaktan derleyip kurar.
 # Yalnızca Xcode Command Line Tools yeterlidir (tam Xcode GEREKMEZ); betik gerekirse
 # onu kendisi kurar. İki şekilde çalışır:
-#   curl -fsSL https://raw.githubusercontent.com/saidsurucu/udf-quicklook-extension/main/kur.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/adeministratorr/udf-quicklook-extension/main/kur.sh | bash
 #   ya da depo içinde:  ./kur.sh
 set -euo pipefail
 
-REPO_URL="https://github.com/saidsurucu/udf-quicklook-extension.git"
+REPO_URL="https://github.com/adeministratorr/udf-quicklook-extension.git"
 CLONE_DIR="$HOME/udf-quicklook-extension"
 APP="UDFViewer.app"
 DEST="/Applications/$APP"
