@@ -1,8 +1,10 @@
-![UDF Quick Look — macOS Finder için UYAP .udf önizleme](assets/social-preview.jpg)
+![Mac’te UDF dosyası nasıl açılır? — UYAP QuickLook Görüntüleyici](assets/social-preview.jpg)
 
-# UDF görüntüleyici (QuickLook) — macOS Apple Silicon
+# Mac’te UDF dosyası nasıl açılır? — UYAP QuickLook Görüntüleyici
 
 > **Kısa yanıt:** UYAP'tan indirdiğiniz `.udf` dosyalarını açmadan, Finder'da **boşluk tuşuyla** önizlemek ve dosya simgesinde **küçük resim** görmek istiyorsanız bu araç tam bunu yapar: **MacBook, MacBook Pro, MacBook Air, Mac mini ve iMac**'de (Apple Silicon / M serisi / ARM tabanlı işlemci) native Swift ile çalışır; Rosetta veya Java gerekmez. **Salt-okunur görüntüleyicidir** — `.udf` düzenleme, imzalama veya e-imza doğrulama yapmaz; bunun için UYAP Doküman Editörü gerekir. Gayriresmî topluluk çalışmasıdır.
+
+**Ayrıntılı Türkçe anlatım:** [Mac’te e-imza ve UYAP kurulumu, ilk kullanım ve hata çözümleri](https://ademyuce.tr/macos-eimza-uyap/).
 
 ## Hangi araç?
 
@@ -28,6 +30,8 @@ UYAP'tan `.udf` (dilekçe, tebligat, karar, bilirkişi raporu) indiren **avukatl
 
 ## "UDF dosyası açılmıyor" arayanlar için kısa cevaplar
 
+- **UDF dosyası hangi programla açılır?** Açma ve düzenleme için resmî UYAP Doküman Editörü; Finder’da hızlı önizleme ve salt okunur görüntüleme için bu proje kullanılır.
+- **UDF QuickLook dosyayı imzalar mı?** Hayır. İmzalama ve elektronik imza doğrulaması bu aracın kapsamı dışındadır.
 - **Çift tıklama davranışı değişir mi?** Hayır — çift tıklama eskisi gibi resmî UYAP Editörü'nü açar. Bu araç yalnızca **hızlı bakış önizlemesi + küçük resim** ekler.
 - **MacBook / MacBook Pro / MacBook Air / iMac / Mac mini'de çalışır mı?** Evet — Apple Silicon (M1/M2/M3/M4 ve sonrası) modeller. Intel Mac desteklenmez.
 - **Salt-okunur görüntüleyici nasıl açılır?** Uygulamayı açıp **Dosya → Aç… (⌘O)** ile `.udf` seçin veya dosyayı uygulama ikonuna sürükleyin.
